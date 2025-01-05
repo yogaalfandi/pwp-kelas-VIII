@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Manajemen User</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-border {
+            border: 2px solid;
+            border-image-source: linear-gradient(to right, #3b82f6, #60a5fa);
+            border-image-slice: 1;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-500 to-blue-300 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white shadow-2xl rounded-xl p-8 w-full max-w-md gradient-border">
+        <h2 class="text-3xl font-extrabold text-center text-blue-600 mb-2">Selamat Datang!</h2>
+        <p class="text-gray-500 text-center mb-6">Silakan masuk untuk melanjutkan</p>
+
+        <!-- Pesan Flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="mb-4">
+                    {% for category, message in messages %}
+                        <div class="p-3 rounded-lg text-white text-sm mb-2 
+                            {% if category == 'error' %} bg-red-500 {% elif category == 'success' %} bg-green-500 {% else %} bg-blue-500 {% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Form Login -->
+        <form action="{{ url_for('login') }}" method="POST" class="space-y-5">
+            <!-- Input Username -->
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    required 
+                    class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                    placeholder="Masukkan username Anda">
+            </div>
+
+            <!-- Input Password -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    required 
+                    class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                    placeholder="Masukkan password Anda">
+            </div>
+
+            <!-- Login Button -->
+            <button 
+                type="submit" 
+                class="w-full py-3 px-4 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform transform hover:scale-105">
+                Login
+            </button>
+        </form>
+
+        <!-- Redirect to Register -->
+        <p class="text-center text-sm text-gray-600 mt-6">
+            Belum punya akun? 
+            <a href="{{ url_for('register') }}" class="text-blue-500 hover:underline font-medium">Daftar Sekarang</a>
+        </p>
+    </div>
+</body>
+</html>
